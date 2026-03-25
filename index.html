@@ -1,0 +1,300 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Hero Quiz</title>
+  <style>
+    body {
+      font-family: Arial;
+      max-width: 800px;
+      margin: 40px auto;
+      padding: 20px;
+    }
+    .question { margin-bottom: 25px; }
+    .option {
+      display: block;
+      margin: 5px 0;
+      padding: 8px;
+      border: 1px solid #ccc;
+      cursor: pointer;
+    }
+    .selected { background-color: #d0e7ff; }
+    .correct { background-color: #c8f7c5; }
+    .wrong { background-color: #f7c5c5; }
+    button { margin: 10px 10px 0 0; padding: 10px; }
+  </style>
+</head>
+<body>
+
+<h2>Hero Quiz</h2>
+<div id="quiz"></div>
+
+<button id="submitBtn">Submit</button>
+<button id="retakeBtn" style="display:none;">Retake Test</button>
+
+<script>
+
+// ==== YOUR FULL QUESTION POOL ====
+const quizData = [
+  {"question":"What is the primary limitation of standalone solar power?","options":["High cost","Low efficiency","Daytime-only generation","Grid dependency"],"answer":2,"explanation":"Solar depends on sunlight."},
+  {"question":"Why is wind paired with solar?","options":["Lower cost","Complementary generation","Less land","Faster install"],"answer":1,"explanation":"Wind offsets solar gaps."},
+  {"question":"What is BESS used for?","options":["Generate","Store & dispatch","Reduce tariff","Increase CUF"],"answer":1,"explanation":"Stores and releases energy."},
+  {"question":"What does CUF measure?","options":["Installed capacity","Utilization","Storage","Loss"],"answer":1,"explanation":"Output vs potential."},
+  {"question":"What problem do hybrids solve?","options":["Cost","Intermittency","Grid loss","Finance"],"answer":1,"explanation":"Reduces variability."},
+
+  {"question":"What is FDRE?","options":["Solar","Dispatchable RE","Wind mix","Storage"],"answer":1,"explanation":"Reliable RE supply."},
+  {"question":"What is RTC power?","options":["Peak","24x7","Stored","Day only"],"answer":1,"explanation":"Continuous supply."},
+  {"question":"Why do complex projects earn more?","options":["Low cost","Reliability premium","Speed","Low risk"],"answer":1,"explanation":"Reliable power pays more."},
+  {"question":"What is load-following?","options":["Constant output","Match demand","Storage","Peak shave"],"answer":1,"explanation":"Aligns supply to demand."},
+  {"question":"What does storage enable?","options":["Cost cut","Peak supply","Speed","Land"],"answer":1,"explanation":"Enables peak delivery."},
+
+  {"question":"Which model needs no upfront cost?","options":["Captive","Group","Third-party PPA","Spot"],"answer":2,"explanation":"Developer owns asset."},
+  {"question":"Which model gives ownership?","options":["Third-party","Captive","Utility","Spot"],"answer":1,"explanation":"Captive ownership."},
+  {"question":"Why long PPAs?","options":["Flexibility","Stable revenue","Cost","Short term"],"answer":1,"explanation":"Predictable cashflow."},
+  {"question":"What is curtailment?","options":["Overgen","Forced reduction","Storage loss","Grid loss"],"answer":1,"explanation":"Grid limits output."},
+  {"question":"What is counterparty risk?","options":["Tech","Payment default","Grid","Weather"],"answer":1,"explanation":"Buyer risk."},
+
+  {"question":"Why storage increases IRR?","options":["Lower cost","Higher tariff capture","CUF","Grid"],"answer":1,"explanation":"Peak pricing."},
+  {"question":"Key grid challenge?","options":["Demand","Intermittency","Cost","Labor"],"answer":1,"explanation":"Variable supply."},
+  {"question":"Grid congestion means?","options":["Overgen","Transmission bottleneck","Storage","Demand"],"answer":1,"explanation":"Limits evacuation."},
+  {"question":"Why forecasting matters?","options":["Cost","Scheduling","CUF","Land"],"answer":1,"explanation":"Grid balance."},
+  {"question":"Why diversify projects?","options":["Cost","Reduce variability","CUF","Speed"],"answer":1,"explanation":"Risk balancing."},
+
+  {"question":"What is degradation?","options":["Failure","Output decline","Grid issue","Storage"],"answer":1,"explanation":"Efficiency drop."},
+  {"question":"Why wind is harder?","options":["Cost","Unpredictable","Efficiency","Demand"],"answer":1,"explanation":"Less predictable."},
+  {"question":"SCADA role?","options":["Finance","Monitoring","HR","Billing"],"answer":1,"explanation":"System control."},
+  {"question":"Why innovation matters?","options":["Staff","Edge","CUF","Cost"],"answer":1,"explanation":"Competitive advantage."},
+  {"question":"Best decarbonization?","options":["Solar","Integrated","Wind","Diesel"],"answer":1,"explanation":"Combination works."},
+
+  {"question":"SCM role?","options":["HR","Procurement","Sales","Finance"],"answer":1,"explanation":"Vendor mgmt."},
+  {"question":"HSE role?","options":["Revenue","Safety","Sales","HR"],"answer":1,"explanation":"Safety compliance."},
+  {"question":"F&A role?","options":["Ops","Finance","Procurement","Marketing"],"answer":1,"explanation":"Financial mgmt."},
+  {"question":"O&M role?","options":["Sales","Performance","Hiring","Policy"],"answer":1,"explanation":"Ensure uptime."},
+  {"question":"Risk IA role?","options":["Sales","Risk control","Procurement","Engineering"],"answer":1,"explanation":"Governance."},
+
+  {"question":"Why cross-functional work?","options":["Cost","Alignment","CUF","Land"],"answer":1,"explanation":"Multi-team coordination."},
+  {"question":"Culture trait?","options":["Hierarchy","Outcome-focused","Centralized","Rigid"],"answer":1,"explanation":"Outcome-driven."},
+  {"question":"Why governance?","options":["Revenue","Transparency","Cost","CUF"],"answer":1,"explanation":"Trust & compliance."},
+  {"question":"Internal controls purpose?","options":["Gen","Risk prevention","Land","Tariff"],"answer":1,"explanation":"Reduce risk."},
+  {"question":"Ethics importance?","options":["CUF","Trust","Cost","Gen"],"answer":1,"explanation":"Long-term credibility."},
+
+  {"question":"Client wants 24x7 power. What solution?","options":["Solar","Wind","Hybrid+storage","Diesel"],"answer":2,"explanation":"RTC solution."},
+  {"question":"High CUF but low revenue. Why?","options":["Demand mismatch","Low gen","Storage","Grid"],"answer":0,"explanation":"Timing matters."},
+  {"question":"Curtailment solution?","options":["More solar","Storage/diversify","Reduce gen","Stop"],"answer":1,"explanation":"Use/storage shift."},
+  {"question":"Short PPA risk?","options":["Stable","Uncertain revenue","Low cost","High CUF"],"answer":1,"explanation":"Less visibility."},
+  {"question":"Merchant risk?","options":["Cost","Price volatility","Gen","Flex"],"answer":1,"explanation":"Uncertain pricing."},
+
+  {"question":"Storage trade-off?","options":["Output","Capex vs revenue","Efficiency","Flex"],"answer":1,"explanation":"Higher cost vs value."},
+  {"question":"Why land critical?","options":["Marketing","Execution","Tariff","CUF"],"answer":1,"explanation":"Project start depends on it."},
+  {"question":"Why transmission matters?","options":["Gen","Evacuation","Cost","CUF"],"answer":1,"explanation":"Deliver power."},
+  {"question":"Availability means?","options":["Capacity","Supply uptime","Storage","Grid"],"answer":1,"explanation":"Operational readiness."},
+  {"question":"What is ramping?","options":["Storage","Fast output change","Grid","CUF"],"answer":1,"explanation":"Adjust quickly."},
+
+  {"question":"Green hydrogen use?","options":["Replace solar","Decarbonize industry","Store coal","Reduce loss"],"answer":1,"explanation":"Hard sectors."},
+  {"question":"Why high-credit clients?","options":["Tariff","Payment security","Demand","Contracts"],"answer":1,"explanation":"Lower default risk."},
+  {"question":"Time-of-day pricing matters because?","options":["Cost","Value timing","CUF","Land"],"answer":1,"explanation":"Peak value higher."},
+  {"question":"Why hybrid location matters?","options":["Policy","Resource variation","Grid","Labor"],"answer":1,"explanation":"Depends on region."},
+  {"question":"Why RTC complex?","options":["Land","Multi-tech balance","CUF","Demand"],"answer":1,"explanation":"Needs coordination."}
+
+ ,
+  {"question":"Why does adding too much storage reduce returns?","options":["Lower CUF","Excess capex","Lower demand","Grid loss"],"answer":1,"explanation":"Cost can exceed value gained."},
+  {"question":"What is the biggest driver of renewable project cost?","options":["Labor","Financing","Land","Weather"],"answer":1,"explanation":"Debt cost is significant."},
+  {"question":"Why is demand-supply alignment critical?","options":["CUF","Revenue maximization","Cost","Land"],"answer":1,"explanation":"Timing affects value."},
+  {"question":"What happens when supply exceeds grid capacity?","options":["Higher tariffs","Curtailment","Storage gain","Demand rise"],"answer":1,"explanation":"Grid limits absorption."},
+  {"question":"Why is geographic diversification useful?","options":["Cost","Risk reduction","Speed","CUF"],"answer":1,"explanation":"Reduces correlated variability."},
+
+  {"question":"A client wants lowest cost power only. Best solution?","options":["RTC","Hybrid","Solar-only","Storage-heavy"],"answer":2,"explanation":"Cheapest option."},
+  {"question":"A project has high storage but low usage. Issue?","options":["High CUF","Underutilized asset","Grid issue","Demand"],"answer":1,"explanation":"Storage not monetized."},
+  {"question":"Why is peak demand important?","options":["CUF","Higher tariffs","Cost","Land"],"answer":1,"explanation":"Peak energy is valuable."},
+  {"question":"What reduces merchant risk?","options":["Spot sale","PPA","Storage","Wind"],"answer":1,"explanation":"Fixed contracts stabilize revenue."},
+  {"question":"Why is execution capability critical?","options":["Cost","Delivery success","CUF","Land"],"answer":1,"explanation":"Ensures project completion."},
+
+  {"question":"A delay in procurement impacts what most?","options":["CUF","Timeline","Tariff","Demand"],"answer":1,"explanation":"Delays cascade execution."},
+  {"question":"Why is flexibility important in operations?","options":["Cost","Adapt to variability","CUF","Land"],"answer":1,"explanation":"Renewables vary."},
+  {"question":"What is the key value of storage duration?","options":["Cost","Energy supply length","CUF","Grid"],"answer":1,"explanation":"Defines supply window."},
+  {"question":"What is a key benefit of hybrid over solar-only?","options":["Cost","Better reliability","Land","Speed"],"answer":1,"explanation":"Reduced intermittency."},
+  {"question":"Why are penalties important in contracts?","options":["CUF","Enforce delivery","Cost","Land"],"answer":1,"explanation":"Ensures compliance."},
+
+  {"question":"A project faces frequent outages. Which team leads?","options":["HR","O&M","Finance","SCM"],"answer":1,"explanation":"O&M handles performance."},
+  {"question":"Why is data analytics useful in O&M?","options":["Cost","Performance optimization","CUF","Land"],"answer":1,"explanation":"Improves efficiency."},
+  {"question":"What is the risk of poor forecasting?","options":["CUF","Grid penalties","Cost","Land"],"answer":1,"explanation":"Mismatch leads to penalties."},
+  {"question":"Why do large projects need strong governance?","options":["CUF","Risk control","Cost","Demand"],"answer":1,"explanation":"Complexity increases risk."},
+  {"question":"What defines a successful renewable project?","options":["CUF","Balanced economics","Land","Labor"],"answer":1,"explanation":"Revenue vs cost balance."},
+
+  {"question":"A team ignores stakeholder concerns. Outcome?","options":["Faster work","Project risk","Higher CUF","Lower cost"],"answer":1,"explanation":"Misalignment creates risk."},
+  {"question":"Why is communication critical?","options":["CUF","Alignment","Cost","Land"],"answer":1,"explanation":"Avoids delays."},
+  {"question":"What is a key risk in fast expansion?","options":["CUF","Execution failure","Cost","Demand"],"answer":1,"explanation":"Scaling too fast breaks systems."},
+  {"question":"Why is long-term planning needed?","options":["CUF","Long payback","Cost","Labor"],"answer":1,"explanation":"Returns take time."},
+  {"question":"What improves plant efficiency?","options":["Cost","Maintenance","CUF","Land"],"answer":1,"explanation":"O&M critical."},
+
+  {"question":"A company wants ESG impact visibility. What matters?","options":["CUF","Carbon metrics","Cost","Land"],"answer":1,"explanation":"Emission reduction tracking."},
+  {"question":"Why is risk diversification important?","options":["Cost","Reduce exposure","CUF","Land"],"answer":1,"explanation":"Spreads uncertainty."},
+  {"question":"What affects tariff most?","options":["Labor","Cost structure","Weather","CUF"],"answer":1,"explanation":"Economics drive pricing."},
+  {"question":"Why is integration difficult?","options":["Cost","Multi-variable coordination","CUF","Land"],"answer":1,"explanation":"Complex systems."},
+  {"question":"What defines scalability?","options":["CUF","Ability to grow sustainably","Cost","Labor"],"answer":1,"explanation":"Growth without breakdown."},
+
+  {"question":"A project overestimates demand. Result?","options":["High CUF","Lower revenue","Cost","Grid"],"answer":1,"explanation":"Mismatch hurts returns."},
+  {"question":"Why is asset uptime critical?","options":["Cost","Revenue continuity","CUF","Land"],"answer":1,"explanation":"No generation = no revenue."},
+  {"question":"What improves grid stability?","options":["Cost","Balanced supply","CUF","Land"],"answer":1,"explanation":"Smooth supply helps grid."},
+  {"question":"Why is policy important?","options":["CUF","Regulatory support","Cost","Land"],"answer":1,"explanation":"Enables projects."},
+  {"question":"What is a key advantage of distributed energy?","options":["Cost","Lower transmission loss","CUF","Land"],"answer":1,"explanation":"Closer to demand."},
+
+  {"question":"Why do delays hurt IRR?","options":["CUF","Revenue delay","Cost","Demand"],"answer":1,"explanation":"Cashflows shift."},
+  {"question":"What is the biggest uncertainty in renewables?","options":["Cost","Weather variability","CUF","Labor"],"answer":1,"explanation":"Nature-driven."},
+  {"question":"Why is storage paired with renewables?","options":["Cost","Stability","CUF","Land"],"answer":1,"explanation":"Balances variability."},
+  {"question":"What is key to long-term contracts?","options":["CUF","Trust","Cost","Land"],"answer":1,"explanation":"Reliability builds trust."},
+  {"question":"What improves decision-making quality?","options":["Speed","Balanced analysis","Cost","CUF"],"answer":1,"explanation":"Evaluate multiple factors."},
+
+  {"question":"A project underperforms due to poor design. Root issue?","options":["CUF","Planning failure","Cost","Land"],"answer":1,"explanation":"Design drives outcome."},
+  {"question":"Why is alignment between teams critical?","options":["CUF","Execution success","Cost","Land"],"answer":1,"explanation":"Prevents breakdowns."},
+  {"question":"What defines operational excellence?","options":["CUF","Consistency","Cost","Land"],"answer":1,"explanation":"Reliable performance."},
+  {"question":"Why is customer trust important?","options":["CUF","Long-term contracts","Cost","Land"],"answer":1,"explanation":"Enables repeat business."},
+  {"question":"What drives competitive advantage?","options":["Cost","Integrated capability","CUF","Land"],"answer":1,"explanation":"Multiple strengths."},
+
+  {"question":"Why is performance monitoring needed?","options":["CUF","Identify issues","Cost","Land"],"answer":1,"explanation":"Track performance."},
+  {"question":"What improves reliability?","options":["Cost","Redundancy & storage","CUF","Land"],"answer":1,"explanation":"Backup systems."},
+  {"question":"What is the impact of poor vendor management?","options":["CUF","Delays","Cost","Land"],"answer":1,"explanation":"Execution risk."},
+  {"question":"Why is capital allocation important?","options":["CUF","Maximize returns","Cost","Land"],"answer":1,"explanation":"Efficient investment."},
+  {"question":"What defines a strong organization?","options":["CUF","Clear roles & accountability","Cost","Land"],"answer":1,"explanation":"Structure enables execution."}
+
+];
+
+// ==== SETTINGS ====
+const QUESTIONS_PER_QUIZ = Math.min(25, quizData.length);
+
+// ==== HELPERS ====
+function shuffleOptions(question) {
+  const correctText = question.options[question.answer];
+
+  let shuffled = [...question.options]
+    .map(opt => ({ opt, sort: Math.random() }))
+    .sort((a, b) => a.sort - b.sort)
+    .map(({ opt }) => opt);
+
+  return {
+    ...question,
+    options: shuffled,
+    answer: shuffled.indexOf(correctText)
+  };
+}
+
+function pickRandomQuestions(data, count) {
+  let shuffled = [...data]
+    .map(q => ({ q, sort: Math.random() }))
+    .sort((a, b) => a.sort - b.sort)
+    .map(({ q }) => q);
+
+  return shuffled.slice(0, count);
+}
+
+// ==== STATE ====
+let selectedQuestions = pickRandomQuestions(quizData, QUESTIONS_PER_QUIZ);
+let shuffledQuizData = selectedQuestions.map(q => shuffleOptions(q));
+let userAnswers = new Array(shuffledQuizData.length).fill(null);
+
+// ==== DOM ====
+const quizDiv = document.getElementById("quiz");
+const submitBtn = document.getElementById("submitBtn");
+const retakeBtn = document.getElementById("retakeBtn");
+
+// ==== LOAD QUIZ ====
+function loadQuiz() {
+  quizDiv.innerHTML = "";
+
+  shuffledQuizData.forEach((q, qIndex) => {
+    const qDiv = document.createElement("div");
+    qDiv.className = "question";
+
+    const title = document.createElement("h3");
+    title.innerText = `${qIndex + 1}. ${q.question}`;
+    qDiv.appendChild(title);
+
+    q.options.forEach((opt, optIndex) => {
+      const optDiv = document.createElement("div");
+      optDiv.className = "option";
+      optDiv.innerText = opt;
+
+      if (userAnswers[qIndex] === optIndex) {
+        optDiv.classList.add("selected");
+      }
+
+      optDiv.onclick = () => {
+        const siblings = qDiv.querySelectorAll(".option");
+        siblings.forEach(s => s.classList.remove("selected"));
+
+        optDiv.classList.add("selected");
+        userAnswers[qIndex] = optIndex;
+      };
+
+      qDiv.appendChild(optDiv);
+    });
+
+    quizDiv.appendChild(qDiv);
+  });
+}
+
+// ==== SUBMIT ====
+submitBtn.onclick = () => {
+  let score = 0;
+  quizDiv.innerHTML = "";
+
+  shuffledQuizData.forEach((q, qIndex) => {
+    const qDiv = document.createElement("div");
+    qDiv.className = "question";
+
+    const title = document.createElement("h3");
+    title.innerText = `${qIndex + 1}. ${q.question}`;
+    qDiv.appendChild(title);
+
+    q.options.forEach((opt, optIndex) => {
+      const optDiv = document.createElement("div");
+      optDiv.className = "option";
+      optDiv.innerText = opt;
+
+      if (optIndex === q.answer) optDiv.classList.add("correct");
+      if (userAnswers[qIndex] === optIndex && optIndex !== q.answer) {
+        optDiv.classList.add("wrong");
+      }
+
+      qDiv.appendChild(optDiv);
+    });
+
+    if (userAnswers[qIndex] === q.answer) score++;
+
+    const exp = document.createElement("p");
+    exp.innerText = "Explanation: " + q.explanation;
+    qDiv.appendChild(exp);
+
+    quizDiv.appendChild(qDiv);
+  });
+
+  submitBtn.style.display = "none";
+  retakeBtn.style.display = "inline-block";
+
+  const result = document.createElement("h2");
+  result.innerText = `Final Score: ${score} / ${shuffledQuizData.length}`;
+  document.body.prepend(result);
+};
+
+// ==== RETAKE ====
+retakeBtn.onclick = () => {
+  userAnswers = new Array(quizData.length).fill(null);
+
+  selectedQuestions = pickRandomQuestions(quizData, QUESTIONS_PER_QUIZ);
+  shuffledQuizData = selectedQuestions.map(q => shuffleOptions(q));
+
+  retakeBtn.style.display = "none";
+  submitBtn.style.display = "inline-block";
+
+  const oldScore = document.querySelector("h2");
+  if (oldScore) oldScore.remove();
+
+  loadQuiz();
+};
+
+// ==== INIT ====
+loadQuiz();
+
+</script>
+
+</body>
+</html>
