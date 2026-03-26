@@ -154,7 +154,448 @@ const quizData = [
   {"question":"What improves reliability?","options":["Cost","Redundancy & storage","CUF","Land"],"answer":1,"explanation":"Backup systems."},
   {"question":"What is the impact of poor vendor management?","options":["CUF","Delays","Cost","Land"],"answer":1,"explanation":"Execution risk."},
   {"question":"Why is capital allocation important?","options":["CUF","Maximize returns","Cost","Land"],"answer":1,"explanation":"Efficient investment."},
-  {"question":"What defines a strong organization?","options":["CUF","Clear roles & accountability","Cost","Land"],"answer":1,"explanation":"Structure enables execution."}
+  {"question":"What defines a strong organization?","options":["CUF","Clear roles & accountability","Cost","Land"],"answer":1,"explanation":"Structure enables execution."},
+  {
+    "question": "What are the two primary customer segments HFE serves?",
+    "options": [
+      "Residential and Agricultural",
+      "Utility (B2G) and Commercial & Industrial (B2B)",
+      "Government and Retail Consumers",
+      "Industrial and Export Markets"
+    ],
+    "answer": 1,
+    "explanation": "HFE primarily serves government entities (Utility) and private businesses (C&I)."
+  },
+  {
+    "question": "What is the key strategic shift HFE is making in its project focus?",
+    "options": [
+      "From international markets to domestic markets",
+      "From thermal to renewable energy",
+      "From simple renewable projects to complex, dispatchable energy solutions",
+      "From solar to wind energy"
+    ],
+    "answer": 2,
+    "explanation": "HFE is moving toward complex projects like FDRE and RTC that provide reliable, dispatchable power."
+  },
+  {
+    "question": "Why are complex projects (FDRE/RTC) important for the power system?",
+    "options": [
+      "They reduce capital investment requirements",
+      "They eliminate the need for transmission infrastructure",
+      "They provide reliable and controllable power supply",
+      "They increase solar panel efficiency"
+    ],
+    "answer": 2,
+    "explanation": "Complex projects solve intermittency by delivering reliable and controllable power."
+  },
+  {
+    "question": "What does it mean that HFE is an end-to-end player?",
+    "options": [
+      "It only focuses on project financing",
+      "It manages the full lifecycle from development to operations",
+      "It only handles power distribution",
+      "It specializes only in energy trading"
+    ],
+    "answer": 1,
+    "explanation": "HFE handles development, design, execution, and operations across the entire project lifecycle."
+  },
+  {
+    "question": "Which of the following is a key investor in HFE?",
+    "options": [
+      "Reliance Industries",
+      "Tata Group",
+      "KKR",
+      "Adani Group"
+    ],
+    "answer": 2,
+    "explanation": "KKR (along with IFC) is a major investor in HFE."
+  },
+  {
+    "question": "What is the primary difference between Utility and C&I customers?",
+    "options": [
+      "Utility customers are private entities, while C&I are government bodies",
+      "Utility customers buy power for resale to consumers, while C&I use it directly",
+      "Utility customers only use renewable energy, while C&I use thermal energy",
+      "There is no significant difference"
+    ],
+    "answer": 1,
+    "explanation": "Utility buyers (SECI/DISCOMs) resell power, while C&I customers consume it directly."
+  },
+  {
+    "question": "What problem do complex renewable projects primarily solve?",
+    "options": [
+      "High capital costs",
+      "Regulatory uncertainty",
+      "Intermittency of renewable energy",
+      "Lack of transmission infrastructure"
+    ],
+    "answer": 2,
+    "explanation": "Solar and wind are intermittent; complex projects use hybrid + storage to solve this."
+  },
+  {
+    "question": "Which of the following correctly lists the three types of complex renewable projects?",
+    "options": [
+      "Solar, Wind, Hydro",
+      "FDRE, RTC, Peak Power",
+      "Captive, Group Captive, Third-party",
+      "Utility, C&I, Distributed"
+    ],
+    "answer": 1,
+    "explanation": "The three key complex project types are FDRE, RTC, and Peak Power."
+  },
+  {
+    "question": "How is FDRE different from RTC?",
+    "options": [
+      "FDRE provides constant power, while RTC follows demand",
+      "FDRE follows demand patterns, while RTC provides continuous power",
+      "FDRE is only solar-based, while RTC is wind-based",
+      "FDRE is cheaper than RTC in all cases"
+    ],
+    "answer": 1,
+    "explanation": "FDRE matches demand patterns, while RTC provides continuous round-the-clock supply."
+  },
+  {
+    "question": "Why do complex renewable projects typically generate higher returns?",
+    "options": [
+      "They require less capital investment",
+      "They face less regulatory oversight",
+      "They have fewer capable competitors due to higher complexity",
+      "They are subsidized more heavily by the government"
+    ],
+    "answer": 2,
+    "explanation": "Higher complexity reduces competition, allowing better pricing and returns."
+  },
+  {
+    "question": "What is one key capability required to succeed in complex renewable projects?",
+    "options": [
+      "Retail distribution network",
+      "Strong design and engineering capability",
+      "High advertising spend",
+      "Government ownership"
+    ],
+    "answer": 1,
+    "explanation": "Complex projects require optimizing solar, wind, and storage — driven by strong design and engineering."
+  },
+  {
+    "question": "What is the fundamental shift in how renewable energy is being valued?",
+    "options": [
+      "From domestic to international markets",
+      "From high-cost to low-cost generation",
+      "From cheapest energy to reliable and dispatchable energy",
+      "From solar to wind energy"
+    ],
+    "answer": 2,
+    "explanation": "The market is shifting from valuing cheap energy to valuing reliable, controllable power supply."
+  },
+  {
+    "question": "Why do renewables contribute less to generation than their capacity share?",
+    "options": [
+      "They are more expensive to operate",
+      "They have lower installed capacity",
+      "They are intermittent and not always available",
+      "They are restricted by regulations"
+    ],
+    "answer": 2,
+    "explanation": "Solar and wind depend on natural conditions, so they cannot generate power continuously."
+  },
+  {
+    "question": "Who are the primary buyers in the Utility segment?",
+    "options": [
+      "Individual households",
+      "Private corporations",
+      "Government entities like SECI and DISCOMs",
+      "Export markets"
+    ],
+    "answer": 2,
+    "explanation": "Utility buyers are government-linked entities that procure power for distribution."
+  },
+  {
+    "question": "Why is storage becoming critical for India’s power system?",
+    "options": [
+      "To reduce capital expenditure",
+      "To eliminate the need for renewables",
+      "To balance supply-demand and manage intermittency",
+      "To increase solar panel efficiency"
+    ],
+    "answer": 2,
+    "explanation": "Storage enables shifting and balancing power, making renewable energy usable at all times."
+  },
+  {
+    "question": "Why is the C&I segment growing rapidly?",
+    "options": [
+      "Higher government subsidies",
+      "Lower cost of renewable energy and net-zero commitments",
+      "Decline in industrial demand",
+      "Limited availability of grid power"
+    ],
+    "answer": 1,
+    "explanation": "C&I customers shift to renewables mainly for cost savings and sustainability goals."
+  },
+  {
+    "question": "What are the key conditions of a Group Captive model?",
+    "options": [
+      "100% ownership and 100% consumption",
+      "More than 26% equity ownership and more than 51% power consumption",
+      "Less than 10% ownership and flexible consumption",
+      "No ownership but fixed tariffs"
+    ],
+    "answer": 1,
+    "explanation": "Group captive requires >26% equity ownership and >51% consumption by the consumer."
+  },
+  {
+    "question": "Why is Group Captive often preferred over third-party PPAs?",
+    "options": [
+      "Higher regulatory compliance",
+      "Higher upfront investment returns",
+      "Lower cost of power due to ownership benefits",
+      "Faster project execution"
+    ],
+    "answer": 2,
+    "explanation": "Ownership allows avoidance of certain charges, resulting in lower effective power cost."
+  },
+  {
+    "question": "What is the key structural difference between Utility and C&I projects?",
+    "options": [
+      "Utility projects are smaller in size",
+      "C&I projects are standardized",
+      "Utility projects are standardized, while C&I projects are customized",
+      "There is no difference"
+    ],
+    "answer": 2,
+    "explanation": "Utility projects are large and standardized, while C&I solutions are tailored per customer."
+  },
+  {
+    "question": "Why is in-house design capability important in complex projects?",
+    "options": [
+      "It reduces marketing costs",
+      "It improves employee satisfaction",
+      "It enables optimization of hybrid systems for better performance and returns",
+      "It eliminates the need for financing"
+    ],
+    "answer": 2,
+    "explanation": "Design determines how solar, wind, and storage are combined for optimal output and returns."
+  },
+  {
+    "question": "Why does supply chain control matter at the bidding stage?",
+    "options": [
+      "It improves branding and visibility",
+      "It ensures access to labor resources",
+      "It reduces cost uncertainty and execution delays",
+      "It eliminates the need for financing"
+    ],
+    "answer": 2,
+    "explanation": "Locking suppliers early reduces cost volatility and delays, improving bid competitiveness."
+  },
+  {
+    "question": "Why is financing strength a competitive advantage in renewable energy?",
+    "options": [
+      "It reduces the need for engineering expertise",
+      "It allows companies to avoid regulatory approvals",
+      "It provides access to low-cost capital in a capital-intensive industry",
+      "It increases electricity demand"
+    ],
+    "answer": 2,
+    "explanation": "Renewable projects require high upfront capital; access to cheaper funding improves project viability."
+  },
+  {
+    "question": "How does execution speed impact competitiveness in bidding?",
+    "options": [
+      "It increases marketing reach",
+      "It reduces the need for design capability",
+      "It lowers project risk and improves bankability",
+      "It eliminates supply chain dependency"
+    ],
+    "answer": 2,
+    "explanation": "Faster execution leads to quicker returns and lower risk, making bids more attractive."
+  },
+  {
+    "question": "Why are capabilities more important in complex projects than in simple solar projects?",
+    "options": [
+      "Complex projects require more marketing effort",
+      "Complex projects involve multiple variables that must be optimized together",
+      "Simple projects are more regulated",
+      "Simple projects require more financing"
+    ],
+    "answer": 1,
+    "explanation": "Complex projects require coordination of solar, wind, storage, and timing — increasing execution complexity."
+  },
+  {
+    "question": "Why is HFE difficult for new entrants to compete with?",
+    "options": [
+      "It operates only in international markets",
+      "It has exclusive government contracts",
+      "It has integrated capabilities, capital access, and execution track record",
+      "It focuses only on solar energy"
+    ],
+    "answer": 2,
+    "explanation": "HFE combines design, execution, financing, and experience — difficult for new players to replicate."
+  },
+  {
+    "question": "How do complex projects solve intermittency at a system level?",
+    "options": [
+      "By increasing solar panel efficiency",
+      "By reducing project size",
+      "By controlling and scheduling power output using hybrid systems and storage",
+      "By eliminating the need for wind energy"
+    ],
+    "answer": 2,
+    "explanation": "Hybrid systems and storage allow power to be dispatched according to demand."
+  },
+  {
+    "question": "What is the relationship between intermittency and storage in renewable systems?",
+    "options": [
+      "Storage increases intermittency",
+      "Intermittency eliminates the need for storage",
+      "Storage mitigates intermittency by shifting energy across time",
+      "There is no relationship"
+    ],
+    "answer": 2,
+    "explanation": "Storage allows excess energy to be stored and used later, reducing variability."
+  },
+  {
+    "question": "Why do lenders prefer established renewable energy players?",
+    "options": [
+      "They offer higher tariffs",
+      "They have better marketing strategies",
+      "They demonstrate predictable cash flows through proven execution",
+      "They operate only in domestic markets"
+    ],
+    "answer": 2,
+    "explanation": "Execution track record leads to reliable returns, reducing lender risk."
+  },
+  {
+    "question": "What is the biggest structural shift in the renewable energy market?",
+    "options": [
+      "From renewable to thermal energy",
+      "From domestic to global markets",
+      "From intermittent generation to reliable, dispatchable power",
+      "From wind to solar energy"
+    ],
+    "answer": 2,
+    "explanation": "The focus is shifting toward reliability and control rather than just generation."
+  },
+  {
+    "question": "Why is storage essential for increasing renewable energy penetration?",
+    "options": [
+      "It reduces installation costs",
+      "It replaces renewable energy sources",
+      "It balances supply and demand and enables peak shifting",
+      "It eliminates transmission losses"
+    ],
+    "answer": 2,
+    "explanation": "Storage stabilizes the grid and allows renewables to be used when needed, not just when generated."
+  },
+  {
+    "question": "Why does intermittency reduce the effective contribution of renewable energy to total generation?",
+    "options": [
+      "Renewables are more expensive to operate",
+      "They cannot generate power continuously despite installed capacity",
+      "They are limited by government regulations",
+      "They require more land than thermal plants"
+    ],
+    "answer": 1,
+    "explanation": "Even with high capacity, renewables generate only when conditions allow, reducing actual output."
+  },
+  {
+    "question": "What is the primary role of DISCOMs in the power system?",
+    "options": [
+      "Generating electricity",
+      "Transmitting electricity across regions",
+      "Distributing electricity to end consumers",
+      "Manufacturing renewable equipment"
+    ],
+    "answer": 2,
+    "explanation": "DISCOMs handle last-mile delivery of electricity to residential, commercial, and industrial users."
+  },
+  {
+    "question": "Why are complex tenders increasing in the renewable energy market?",
+    "options": [
+      "They require less technical expertise",
+      "They are easier to finance",
+      "They address the need for reliable and dispatchable power",
+      "They eliminate the need for storage"
+    ],
+    "answer": 2,
+    "explanation": "As grids need reliability, tenders are shifting toward solutions that ensure firm power supply."
+  },
+  {
+    "question": "Which factor most directly enables renewable energy to compete with thermal power?",
+    "options": [
+      "Higher government ownership",
+      "Lower cost of generation and faster deployment",
+      "Increased transmission losses",
+      "Reduced industrial demand"
+    ],
+    "answer": 1,
+    "explanation": "Renewables are cheaper and faster to deploy compared to new thermal plants."
+  },
+  {
+    "question": "Why is the C&I segment more fragmented than the Utility segment?",
+    "options": [
+      "It has fewer customers",
+      "It involves multiple customized solutions across diverse customers",
+      "It is regulated by a single authority",
+      "It only operates in rural areas"
+    ],
+    "answer": 1,
+    "explanation": "C&I customers have varied needs, requiring tailored solutions rather than standardized projects."
+  },
+  {
+    "question": "What is the main advantage of third-party PPA models for C&I customers?",
+    "options": [
+      "Full ownership of the asset",
+      "No upfront capital investment",
+      "Higher control over operations",
+      "Lower regulatory requirements"
+    ],
+    "answer": 1,
+    "explanation": "In third-party PPAs, the developer owns the asset, so the customer avoids upfront investment."
+  },
+  {
+    "question": "Why do hybrid renewable systems (solar + wind + storage) perform better than standalone systems?",
+    "options": [
+      "They eliminate the need for grid connectivity",
+      "They reduce capital expenditure completely",
+      "They combine complementary generation profiles and improve reliability",
+      "They only operate during peak hours"
+    ],
+    "answer": 2,
+    "explanation": "Solar and wind complement each other, and storage smooths variability, improving overall output."
+  },
+  {
+    "question": "What is the primary objective of peak power projects?",
+    "options": [
+      "To generate power continuously at all times",
+      "To supply electricity only during low-demand periods",
+      "To supply electricity during high-demand periods",
+      "To eliminate storage requirements"
+    ],
+    "answer": 2,
+    "explanation": "Peak power projects are designed to meet demand during high-load periods."
+  },
+  {
+    "question": "Why is trading capability becoming important in high CUF renewable projects?",
+    "options": [
+      "To reduce project size",
+      "To manage excess generation and optimize revenue",
+      "To eliminate the need for storage",
+      "To simplify regulatory compliance"
+    ],
+    "answer": 1,
+    "explanation": "Trading allows developers to sell surplus power and maximize returns from high-output systems."
+  },
+  {
+    "question": "What is the biggest risk for players lacking strong execution capability in renewable projects?",
+    "options": [
+      "Higher marketing costs",
+      "Lower employee retention",
+      "Project delays leading to cost overruns and reduced returns",
+      "Reduced electricity demand"
+    ],
+    "answer": 2,
+    "explanation": "Execution delays directly impact costs, timelines, and project viability."
+  }
+]
 
 ];
 
