@@ -34,8 +34,8 @@
 <script>
 
 // ==== YOUR FULL QUESTION POOL ====
-const quizData = [
-  {"question":"What is the primary limitation of standalone solar power?","options":["High cost","Low efficiency","Daytime-only generation","Grid dependency"],"answer":2,"explanation":"Solar depends on sunlight."},
+const rawQuizData = [ 
+    {"question":"What is the primary limitation of standalone solar power?","options":["High cost","Low efficiency","Daytime-only generation","Grid dependency"],"answer":2,"explanation":"Solar depends on sunlight."},
   {"question":"Why is wind paired with solar?","options":["Lower cost","Complementary generation","Less land","Faster install"],"answer":1,"explanation":"Wind offsets solar gaps."},
   {"question":"What is BESS used for?","options":["Generate","Store & dispatch","Reduce tariff","Increase CUF"],"answer":1,"explanation":"Stores and releases energy."},
   {"question":"What does CUF measure?","options":["Installed capacity","Utilization","Storage","Loss"],"answer":1,"explanation":"Output vs potential."},
@@ -1026,8 +1026,11 @@ const quizData = [
 "explanation": "Renewables attract C&I customers, reducing DISCOM cross-subsidy revenue."
 }
 
-
 ];
+
+const quizData = rawQuizData.filter(q =>
+  !q.options.every(opt => opt.trim().split(" ").length === 1)
+);
 
 // ==== SETTINGS ====
 const QUESTIONS_PER_QUIZ = Math.min(25, quizData.length);
